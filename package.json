@@ -14,9 +14,12 @@
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-components": "^2.0.1",
     "@umijs/max": "^4.0.38",
-    "antd": "^5.0.0"
+    "ahooks": "^3.7.3",
+    "antd": "^5.0.0",
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.9",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "husky": "^8.0.1",
