@@ -30,7 +30,7 @@ export const request: RequestConfig = {
   responseInterceptors: [
     (response: any) => {
       const { data } = response;
-      if (data?.code !== 201 || data?.errorCode !== 0) {
+      if (data?.code !== 200 || data?.errorCode !== 0) {
         message.error(data.message);
       }
       //在就行拦截器里可以直接返回响应体里的data字段
@@ -74,10 +74,10 @@ export const layout: RunTimeLayoutConfig = (props) => {
       locale: false,
     },
     // rightRender: () => 11, // 展示用户名、头像、退出登录相关组件
-    logout: () => {
+    logout: async () => {
+      await setInitialState({ user: null });
       localStorage.clear();
       sessionStorage.clear();
-      setInitialState({ user: null });
       history.push('/login');
     },
     onPageChange() {

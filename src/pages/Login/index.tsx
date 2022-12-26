@@ -14,7 +14,7 @@ const Login = () => {
   const { loading, run } = useRequest(login, {
     manual: true, // 手动调用
     onSuccess({ data, code }) {
-      if (code !== 201) return;
+      if (code !== 200) return;
       const { accessToken, refreshToken } = data;
       const user = jwt.decode(accessToken);
       localStorage.setItem('accessToken', accessToken);
