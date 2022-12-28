@@ -18,7 +18,6 @@ import {
 } from '@ant-design/icons';
 import { deleteUser } from '@/services/sys/user';
 import { ROLE_TYPES, ACCOUNT_STATUS } from '@/constants';
-// import
 
 export type UserListItem = {
   id: number;
