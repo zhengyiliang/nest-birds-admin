@@ -17,8 +17,8 @@ const Login = () => {
       if (code !== 200) return;
       const { accessToken, refreshToken } = data;
       const user = jwt.decode(accessToken);
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('access_token', accessToken);
+      localStorage.setItem('refresh_token', refreshToken);
       setInitialState({ user });
     },
   });

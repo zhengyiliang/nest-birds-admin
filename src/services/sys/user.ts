@@ -7,3 +7,10 @@ export async function getUserList(params: API.UserList | ParamsType) {
     params: params,
   });
 }
+
+export async function deleteUser(params: { id: number }) {
+  return request('/sys/user/delete', {
+    method: 'delete',
+    params,
+  });
+}

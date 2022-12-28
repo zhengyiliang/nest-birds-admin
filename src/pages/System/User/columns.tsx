@@ -1,21 +1,24 @@
 import type { ProColumns } from '@ant-design/pro-components';
-import { Avatar, Button, ConfigProvider, Switch, Tooltip } from 'antd';
+import {
+  Avatar,
+  Button,
+  ConfigProvider,
+  Modal,
+  message,
+  Switch,
+  Tooltip,
+  Typography,
+} from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
   SettingOutlined,
+  ExclamationCircleOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
-
-const valueEnum = {
-  1: {
-    text: '停用',
-    status: 'Error',
-  },
-  0: {
-    text: '正常',
-    status: 'Success',
-  },
-};
+import { deleteUser } from '@/services/sys/user';
+import { ROLE_TYPES, ACCOUNT_STATUS } from '@/constants';
+// import
 
 export type UserListItem = {
   id: number;
@@ -40,7 +43,7 @@ export const forms: ProColumns<UserListItem>[] = [
     key: 'status',
     hideInTable: true,
     valueType: 'select',
-    valueEnum,
+    valueEnum: ACCOUNT_STATUS,
   },
   {
     title: '创建时间',
@@ -73,7 +76,7 @@ export const columns: ProColumns<UserListItem>[] = [
     width: 60,
     render: (_, { avatar }) => {
       // console.log(val);
-      return <Avatar src={avatar} shape="square" />;
+      return <Avatar icon={<UserOutlined />} src={avatar} shape="square" />;
     },
   },
   {
@@ -89,11 +92,7 @@ export const columns: ProColumns<UserListItem>[] = [
     ellipsis: true,
     width: 100,
     hideInSearch: true,
-    valueEnum: {
-      32: { text: '超级管理员' },
-      16: { text: '管理员' },
-      8: { text: '普通用户' },
-    },
+    valueEnum: ROLE_TYPES,
   },
   {
     title: '邮箱',
@@ -122,7 +121,7 @@ export const columns: ProColumns<UserListItem>[] = [
     title: '状态',
     dataIndex: 'status',
     hideInSearch: true,
-    valueEnum,
+    valueEnum: ACCOUNT_STATUS,
     width: 120,
     render: (text, { status }) => {
       return (
@@ -143,12 +142,43 @@ export const columns: ProColumns<UserListItem>[] = [
     key: 'option',
     fixed: 'right',
     width: 120,
-    render: (/* text, record, _, action */) => [
+    render: (text, { id, name }, index, action) => [
       <Tooltip title="编辑" key="edit">
         <Button size="small" type="primary" icon={<EditOutlined />} />
       </Tooltip>,
       <Tooltip title="删除" key="delete">
-        <Button size="small" type="primary" danger icon={<DeleteOutlined />} />
+        <Button
+          size="small"
+          type="primary"
+          danger
+          icon={<DeleteOutlined />}
+          onClick={async () => {
+            Modal.confirm({
+              title: '删除提示',
+              icon: <ExclamationCircleOutlined />,
+              content: (
+                <>
+                  确定删除&nbsp;&nbsp;
+                  <Typography.Text type="warning">{name}</Typography.Text>
+                  &nbsp;&nbsp;用户吗，删除后不可恢复
+                </>
+              ),
+              okText: '确认',
+              cancelText: '取消',
+              onOk: async () => {
+                console.log(index, text);
+                const { code, message: msg } = await deleteUser({ id });
+                if (code !== 200) return message.error(msg || '删除失败');
+                // if (index === 1) {
+                // }
+                // TODO 删除当前页最后一条记录页码自动跳到前一页(受控分页器)
+                // 暂时用重置条件来解决
+                action?.reload(true);
+                // console.log(_, action, 'delete');
+              },
+            });
+          }}
+        />
       </Tooltip>,
       <ConfigProvider
         key="setting"

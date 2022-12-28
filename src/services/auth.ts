@@ -6,3 +6,7 @@ export async function login(params: API.User) {
     data: params,
   });
 }
+
+export async function getRefreshToken() {
+  return request('/refresh');
+}
