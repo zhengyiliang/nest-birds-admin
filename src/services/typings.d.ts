@@ -1,12 +1,12 @@
 declare namespace API {
   export interface User {
-    id?: number;
+    id?: number | string;
     name?: string;
     email?: string;
     avatar?: string;
     description?: string;
-    auth?: number;
-    status?: number;
+    auth?: number | string;
+    status?: number | string;
     password?: string;
   }
   export interface UserList {

@@ -14,3 +14,35 @@ export async function deleteUser(params: { id: number }) {
     params,
   });
 }
+
+export async function createUser(data: API.User) {
+  return request('/sys/user/create', {
+    method: 'post',
+    data,
+  });
+}
+
+export async function updateUser(data: API.User, id: string | number) {
+  return request('/sys/user/update', {
+    method: 'put',
+    data,
+    params: { id },
+  });
+}
+
+export async function resetPassword(id: string | number) {
+  return request('/sys/user/password/reset', {
+    method: 'put',
+    params: { id },
+  });
+}
+
+export async function updateStatus(data: {
+  id: string | number;
+  status: string | number;
+}) {
+  return request('/sys/user/status/update', {
+    method: 'put',
+    data: data,
+  });
+}

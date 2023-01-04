@@ -28,11 +28,11 @@ export default [
         path: '/sys/user',
         component: './System/User',
       },
-      {
-        name: '角色管理',
-        path: '/sys/role',
-        component: './System/Role',
-      },
+      // {
+      //   name: '角色管理',
+      //   path: '/sys/role',
+      //   component: './System/Role',
+      // },
     ],
   },
   {
