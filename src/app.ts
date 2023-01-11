@@ -6,7 +6,7 @@ import {
   RunTimeLayoutConfig,
   request as $request,
 } from '@umijs/max';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { getRefreshToken } from '@/services/auth';
 // import { LayoutContextProps } from 'antd/es/layout/layout';
 // import { useRequest, useModel, useNavigate } from '@umijs/max';
@@ -54,7 +54,6 @@ export const request: RequestConfig = {
   //响应拦截器
   responseInterceptors: [
     (response: any) => {
-      console.log(response);
       const { data, config } = response;
       const { code, errorCode, message: msg } = data;
       const { url, params, method, data: configData } = config;
@@ -99,7 +98,7 @@ export const request: RequestConfig = {
   ],
 };
 
-interface userProps {
+export interface userProps {
   uid: number;
   scope: number;
   name: string;
@@ -109,8 +108,8 @@ interface userProps {
   exp: number;
 }
 
-interface initialStateProps {
-  user?: userProps | string | JwtPayload | null;
+export interface initialStateProps {
+  user?: userProps | null;
 }
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
@@ -121,7 +120,7 @@ export async function getInitialState(): Promise<initialStateProps> {
   };
   const token = localStorage.getItem('access_token');
   if (token) {
-    initialState.user = jwt.decode(token);
+    initialState.user = jwt.decode(token) as userProps;
   }
   return initialState;
 }
@@ -130,6 +129,9 @@ export const layout: RunTimeLayoutConfig = (props) => {
   const { initialState, setInitialState } = props;
   return {
     logo,
+    waterMarkProps: {
+      content: '正好有时间',
+    },
     menu: {
       locale: false,
     },

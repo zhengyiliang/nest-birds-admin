@@ -8,6 +8,12 @@ export async function getUserList(params: API.UserList | ParamsType) {
   });
 }
 
+export async function getUserByAuth() {
+  return request('/sys/user/get', {
+    method: 'get',
+  });
+}
+
 export async function deleteUser(params: { id: number }) {
   return request('/sys/user/delete', {
     method: 'delete',

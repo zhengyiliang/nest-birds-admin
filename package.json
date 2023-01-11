@@ -16,6 +16,7 @@
     "@umijs/max": "^4.0.38",
     "ahooks": "^3.7.3",
     "antd": "^5.0.0",
+    "for-editor": "^0.3.5",
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {

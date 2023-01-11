@@ -18,3 +18,15 @@ export const ACCOUNT_STATUS = {
     status: 'Success',
   },
 };
+
+// 文章状态  发布/草稿
+export const ARTICLE_STATUS = {
+  0: {
+    text: '草稿',
+    status: 'warning',
+  },
+  1: {
+    text: '已发布',
+    status: 'Success',
+  },
+};

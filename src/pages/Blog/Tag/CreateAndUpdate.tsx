@@ -1,16 +1,6 @@
-import {
-  Modal,
-  Form,
-  Input,
-  Button,
-  Select,
-  Switch,
-  message,
-  Space,
-} from 'antd';
+import { Modal, Form, Input, Button, message, Space } from 'antd';
 import React, { PropsWithChildren, useState } from 'react';
-import { ROLE_TYPES } from '@/constants';
-import { createUser, updateUser } from '@/services/sys/user';
+import { createTag, updateTag } from '@/services/blog/tag';
 
 const { TextArea } = Input;
 
@@ -18,8 +8,8 @@ interface CreateProps {
   modalVisible: boolean;
   onCancel: () => void;
   type: 'create' | 'update';
-  data: API.User;
-  onOk: (user: API.User) => void;
+  data: Partial<API.Tag>;
+  onOk: (user: API.Tag) => void;
 }
 
 const titleMap: {
@@ -45,28 +35,24 @@ const CreateAndUpdate: React.FC<PropsWithChildren<CreateProps>> = (props) => {
     >
       <Form
         size="large"
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         onFinish={async (valuse) => {
-          const params = {
-            ...valuse,
-            status: (!valuse.status as any) * 1,
-          };
           if (type == 'create') {
             setLoading(true);
-            const { code } = await createUser(params);
+            const { code } = await createTag(valuse);
             setLoading(false);
             if (code == 200) {
-              onOk(params);
+              onOk(valuse);
             }
           }
 
           if (type == 'update') {
             if (data?.id) {
               setLoading(true);
-              const { code } = await updateUser(params, data.id);
+              const { code } = await updateTag(valuse, data.id);
               setLoading(false);
               if (code == 200) {
-                onOk(params);
+                onOk(valuse);
               }
             } else {
               message.error('id 不存在');
@@ -77,48 +63,22 @@ const CreateAndUpdate: React.FC<PropsWithChildren<CreateProps>> = (props) => {
         layout="horizontal"
       >
         <Form.Item
-          label="名称"
+          label="标签名称"
           name="name"
           tooltip="名称是唯一key"
           rules={[{ required: true, message: 'name is required' }]}
         >
-          <Input bordered={type == 'create'} readOnly={type == 'update'} />
+          <Input />
         </Form.Item>
 
         <Form.Item
           label="描述"
-          name="description"
+          name="desc"
           rules={[{ required: true, message: 'description is required' }]}
         >
           <TextArea rows={2} />
         </Form.Item>
-        <Form.Item
-          label="邮箱"
-          name="email"
-          rules={[
-            { type: 'email' },
-            { required: true, message: 'email is required' },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="角色"
-          name="auth"
-          rules={[{ required: true, message: 'role is required' }]}
-        >
-          <Select
-            options={Object.entries(ROLE_TYPES)
-              .map(([key, val]) => ({
-                value: key,
-                label: val.text,
-              }))
-              .reverse()}
-          />
-        </Form.Item>
-        <Form.Item label="状态" name="status" valuePropName="checked">
-          <Switch checkedChildren="启用" unCheckedChildren="停用" />
-        </Form.Item>
+
         <div style={{ textAlign: 'center' }}>
           <Space align="center" size="large">
             <Button onClick={onCancel}>取消</Button>

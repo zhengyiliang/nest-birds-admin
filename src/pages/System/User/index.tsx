@@ -46,7 +46,8 @@ const User = () => {
         <ProTable<UserListItem>
           actionRef={actionRef}
           // loading={loading}
-          scroll={{ x: 1300 }}
+          scroll={{ x: 1000 }}
+          // polling={2000}
           columns={[
             ...forms,
             ...columns,
@@ -55,6 +56,7 @@ const User = () => {
               valueType: 'option',
               key: 'option',
               fixed: 'right',
+              align: 'center',
               width: 120,
               render: (text, record, index, action) => {
                 const { id, name, email, description, auth, status } = record;

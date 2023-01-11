@@ -42,14 +42,34 @@ export default [
       {
         name: '文章管理',
         path: '/blog/article',
+        component: './Blog/Article',
+      },
+      {
+        name: '创建文章',
+        path: '/blog/article/create',
+        hideInMenu: true,
+        component: './Blog/Article/CreateAndUpdate',
+      },
+      {
+        name: '修改文章',
+        path: '/blog/article/update/:id',
+        hideInMenu: true,
+        component: './Blog/Article/CreateAndUpdate',
       },
       {
         name: '分类管理',
         path: '/blog/category',
+        component: './Blog/Category',
       },
       {
         name: '标签管理',
         path: '/blog/tag',
+        component: './Blog/Tag',
+      },
+      {
+        name: '留言管理',
+        path: '/blog/message',
+        component: './Blog/Message',
       },
     ],
   },

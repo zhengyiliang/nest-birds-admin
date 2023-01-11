@@ -51,12 +51,14 @@ export const columns: ProColumns<UserListItem>[] = [
     valueType: 'indexBorder',
     width: 48,
     hideInSetting: true,
+    // fixed: 'left',
   },
   {
     title: '头像',
     dataIndex: 'avatar',
     ellipsis: true,
     hideInSearch: true,
+    // fixed: 'left',
     width: 60,
     render: (_, { avatar }) => {
       // console.log(val);
@@ -67,6 +69,7 @@ export const columns: ProColumns<UserListItem>[] = [
     title: '名称',
     dataIndex: 'name',
     ellipsis: true,
+    fixed: 'left',
     width: 100,
     hideInSearch: true,
   },
