@@ -69,16 +69,16 @@ const Category = () => {
               dataIndex: 'description',
               ellipsis: true,
             },
-            {
-              title: '创建者',
-              width: 120,
-              dataIndex: 'create_by',
-            },
-            {
-              title: '最后更新者',
-              width: 120,
-              dataIndex: 'update_by',
-            },
+            // {
+            //   title: '创建者',
+            //   width: 120,
+            //   dataIndex: 'created_by',
+            // },
+            // {
+            //   title: '最后更新者',
+            //   width: 120,
+            //   dataIndex: 'update_by',
+            // },
             {
               title: '创建时间',
               width: 160,

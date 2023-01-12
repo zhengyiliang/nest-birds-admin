@@ -14,6 +14,20 @@ export async function createArticle(data: API.Article) {
   });
 }
 
+export async function getDetail(params: { id?: string }) {
+  return request('/blog/article/detail', {
+    method: 'get',
+    params,
+  });
+}
+
+export async function updateArticle(data: API.Article) {
+  return request('/blog/article/update', {
+    method: 'put',
+    data,
+  });
+}
+
 export async function uploadCover(data: FormData) {
   return request('/blog/article/cover/upload', {
     method: 'post',

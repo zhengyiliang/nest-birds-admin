@@ -10,28 +10,52 @@ import {
   Row,
   Modal,
   Select,
-  message,
 } from 'antd';
 import Editor from 'for-editor';
 import { useForm } from 'antd/es/form/Form';
 import { useModel, useRequest } from '@umijs/max';
 import { getAllTag } from '@/services/blog/tag';
 import { getAllCategory } from '@/services/blog/category';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { initialStateProps } from '@/app';
-import { createArticle, uploadImg } from '@/services/blog/article';
-import UploadCover from './components/UploadCover';
+import { uploadImg } from '@/services/blog/article';
+import { UploadCover } from '.';
 import { uploadValidate } from '@/utils';
 import { useNavigate } from '@umijs/max';
 
-const CreateAndUpdate = () => {
+interface CreateAndUpdateProps {
+  onFinish: (values: any) => void;
+  initialValues: any;
+  submitLoading: boolean;
+  type: 'create' | 'update';
+}
+
+const CreateAndUpdate: FC<CreateAndUpdateProps> = (props) => {
+  const { onFinish, initialValues, submitLoading, type } = props;
   const { initialState } = useModel('@@initialState');
   const user: initialStateProps['user'] = initialState?.user;
   const navigate = useNavigate();
 
+  // const [initValue, setInitValue] = useState({
+  //   isTop: '0',
+  //   isHot: '0',
+  //   isPublic: '1',
+  //   status: '0',
+  // });
+
+  // const { id } = useParams();
+  // console.log(params);
+
+  // useEffect(() => )
+
   const [form] = useForm();
   const [tagOptions, setTagOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
+
+  // const { loading: updateLoading, run: update } = useRequest(updateArticle, {
+  //   manual: true,
+  //   onSuccess() {},
+  // });
 
   // 获取所有标签
   const { loading: tagLoading } = useRequest(getAllTag, {
@@ -64,34 +88,28 @@ const CreateAndUpdate = () => {
     });
   };
 
-  // 创建文章
-  const { loading, run: create } = useRequest(createArticle, {
-    manual: true,
-    onSuccess({ code }) {
-      console.log(code);
-      if (code === 200) {
-        message.success('文章创建成功');
-        navigate('/blog/article');
-      }
-    },
-  });
+  // // 创建文章
+  // const { loading, run: create } = useRequest(createArticle, {
+  //   manual: true,
+  //   onSuccess({ code }) {
+  //     console.log(code);
+  //     if (code === 200) {
+  //       message.success('文章创建成功');
+  //       navigate('/blog/article');
+  //     }
+  //   },
+  // });
 
   return (
     <>
       <PageContainer title={false}>
         <Card bordered>
           <Form
+            key={initialValues}
             form={form}
             labelCol={{ span: 10 }}
-            onFinish={(data) => {
-              create(data);
-            }}
-            initialValues={{
-              isTop: '0',
-              isHot: '0',
-              isPublic: '1',
-              status: '0',
-            }}
+            onFinish={onFinish}
+            initialValues={initialValues}
           >
             <Row>
               <Col span={8}>
@@ -210,8 +228,7 @@ const CreateAndUpdate = () => {
                 <Button
                   size="large"
                   onClick={() => {
-                    const content = form.getFieldValue('content');
-                    if (content?.trim()) {
+                    if (form.isFieldsTouched()) {
                       Modal.confirm({
                         title: '提示',
                         content: '请确认是否要离开本页面? 您的内容尚未保存',
@@ -227,12 +244,12 @@ const CreateAndUpdate = () => {
                   返回
                 </Button>
                 <Button
-                  loading={loading}
+                  loading={submitLoading}
                   size="large"
                   type="primary"
                   htmlType="submit"
                 >
-                  提交
+                  {type === 'create' ? '提交' : '保存'}
                 </Button>
               </Space>
             </div>

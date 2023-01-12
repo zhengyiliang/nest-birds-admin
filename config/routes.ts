@@ -48,13 +48,13 @@ export default [
         name: '创建文章',
         path: '/blog/article/create',
         hideInMenu: true,
-        component: './Blog/Article/CreateAndUpdate',
+        component: './Blog/Article/Create',
       },
       {
         name: '修改文章',
         path: '/blog/article/update/:id',
         hideInMenu: true,
-        component: './Blog/Article/CreateAndUpdate',
+        component: './Blog/Article/Update',
       },
       {
         name: '分类管理',

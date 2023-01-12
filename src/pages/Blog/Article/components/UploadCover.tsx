@@ -20,6 +20,7 @@ import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 import '../index.less';
 import { uploadValidate } from '@/utils';
 import { deleteCover, uploadCover } from '@/services/blog/article';
+import ImgFailed from '@/assets/svg/img-failed.svg';
 
 interface UploadCoverProps {
   form: FormInstance;
@@ -30,7 +31,7 @@ const UploadCover: FC<UploadCoverProps> = (props) => {
 
   const [visible, setVisible] = useState(false);
 
-  const [coverType, setCoverType] = useState('address');
+  const [coverType, setCoverType] = useState('upload');
 
   const [upLoading, setUpLoading] = useState(false);
 
@@ -49,7 +50,7 @@ const UploadCover: FC<UploadCoverProps> = (props) => {
 
   const cover = form?.getFieldValue('cover');
 
-  const [preCover, setPreCover] = useState();
+  const [preCover, setPreCover] = useState(cover);
 
   const delCover = async (cb?: () => void, text?: string) => {
     if (preCover) {
@@ -147,12 +148,13 @@ const UploadCover: FC<UploadCoverProps> = (props) => {
               });
             }}
           >
-            {typeof cover === 'string' ? (
+            {typeof cover === 'string' && cover ? (
               <Image
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
                 width="100%"
+                fallback={ImgFailed}
                 height="100%"
                 src={cover}
                 alt="封面"
