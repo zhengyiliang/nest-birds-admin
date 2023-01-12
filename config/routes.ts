@@ -57,6 +57,12 @@ export default [
         component: './Blog/Article/Update',
       },
       {
+        name: '文章详情',
+        path: '/blog/article/detail/:id',
+        hideInMenu: true,
+        component: './Blog/Article/Detail',
+      },
+      {
         name: '分类管理',
         path: '/blog/category',
         component: './Blog/Category',

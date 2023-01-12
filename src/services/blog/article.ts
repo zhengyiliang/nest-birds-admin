@@ -21,6 +21,13 @@ export async function getDetail(params: { id?: string }) {
   });
 }
 
+export async function getContent(params: { id?: string }) {
+  return request('/blog/article/content', {
+    method: 'get',
+    params,
+  });
+}
+
 export async function updateArticle(data: API.Article) {
   return request('/blog/article/update', {
     method: 'put',
@@ -46,5 +53,12 @@ export async function uploadImg(data: FormData) {
   return request('/blog/article/image/upload', {
     method: 'post',
     data,
+  });
+}
+
+export async function deleteArticle(params: { id?: string }) {
+  return request('/blog/article/delete', {
+    method: 'delete',
+    params,
   });
 }

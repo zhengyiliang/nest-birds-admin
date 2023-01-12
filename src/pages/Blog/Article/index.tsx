@@ -5,14 +5,24 @@ import {
   ProColumns,
 } from '@ant-design/pro-components';
 import { useRef } from 'react';
-import { getArticleList } from '@/services/blog/article';
+import { deleteArticle, getArticleList } from '@/services/blog/article';
 import { ARTICLE_STATUS } from '@/constants';
-import { Button, Image, Modal, Tooltip, Typography } from 'antd';
+import {
+  Badge,
+  Button,
+  Image,
+  message,
+  Modal,
+  Space,
+  Tag,
+  Tooltip,
+} from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
   ExclamationOutlined,
   EyeOutlined,
+  MessageOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
 import { useAccess, useRequest } from '@umijs/max';
@@ -22,6 +32,20 @@ import { useState } from 'react';
 import { getUserByAuth } from '@/services/sys/user';
 import { useNavigate } from '@umijs/max';
 import ImgFailed from '@/assets/svg/img-failed.svg';
+
+const tagColors = [
+  'magenta',
+  'red',
+  'volcano',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'geekblue',
+  'purple',
+];
 
 const enumMap = (data: { id: number; name: string }[]) => {
   return data?.reduce((pre, cur) => {
@@ -209,6 +233,19 @@ const Article = () => {
               hideInSearch: true,
               hideInSetting: true,
               width: 120,
+              render: (_, record) => {
+                return (
+                  <Space>
+                    {record.tags.map(
+                      (x: { id: number; name: string }, index: number) => (
+                        <Tag color={tagColors[index]} key={x.id}>
+                          {x.name}
+                        </Tag>
+                      ),
+                    )}
+                  </Space>
+                );
+              },
             },
             {
               title: '浏览数',
@@ -247,13 +284,15 @@ const Article = () => {
               key: 'option',
               fixed: 'right',
               align: 'center',
-              width: 120,
+              width: 160,
               render: (...args) => {
-                const [, record] = args;
+                const [, record, , action] = args;
                 return [
                   <Tooltip title="查看" key="eye">
                     <Button
-                      onClick={() => {}}
+                      onClick={() => {
+                        navigate(`/blog/article/detail/${record?.id}`);
+                      }}
                       size="small"
                       type="primary"
                       icon={<EyeOutlined />}
@@ -269,6 +308,17 @@ const Article = () => {
                       icon={<EditOutlined />}
                     />
                   </Tooltip>,
+                  <Tooltip title="评论" key="comments">
+                    <Badge count={record?.comments?.length}>
+                      <Button
+                        onClick={() => {}}
+                        size="small"
+                        type="primary"
+                        icon={<MessageOutlined />}
+                      />
+                    </Badge>
+                  </Tooltip>,
+
                   <Tooltip title="删除" key="delete">
                     <Button
                       size="small"
@@ -279,16 +329,18 @@ const Article = () => {
                         Modal.confirm({
                           title: '删除提示',
                           icon: <ExclamationOutlined />,
-                          content: (
-                            <>
-                              确定删除&nbsp;&nbsp;
-                              <Typography.Text type="warning"></Typography.Text>
-                              &nbsp;&nbsp;文章吗，删除后不可恢复
-                            </>
-                          ),
+                          content: '确定删除该文章吗，删除后不可恢复',
                           okText: '确认',
                           cancelText: '取消',
-                          onOk: async () => {},
+                          onOk: async () => {
+                            const { code } = await deleteArticle({
+                              id: record?.id,
+                            });
+                            if (code === 200) {
+                              message.success('删除成功');
+                              action?.reload();
+                            }
+                          },
                         });
                       }}
                     />
