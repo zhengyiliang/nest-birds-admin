@@ -57,7 +57,7 @@ const Detail = () => {
                       }
                       title={item.user?.name}
                       description={dayjs(item?.updated_at).format(
-                        'YYYY-MM-DD hh:mm:ss',
+                        'YYYY-MM-DD HH:mm:ss',
                       )}
                     />
                     <Badge
