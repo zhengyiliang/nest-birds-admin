@@ -15,7 +15,7 @@ const Update = () => {
     manual: true,
     onSuccess({ code }) {
       if (code === 200) {
-        message.success('文章创建成功');
+        message.success('文章更新成功');
         navigate('/blog/article');
       }
     },
