@@ -1,7 +1,17 @@
 import ReactMarkdown from 'react-markdown';
 import { PageContainer } from '@ant-design/pro-components';
-import { Card, Skeleton, Row, Col, Affix, List, Avatar, Badge } from 'antd';
-import { useParams, useRequest } from '@umijs/max';
+import {
+  Card,
+  Skeleton,
+  Row,
+  Col,
+  Affix,
+  List,
+  Avatar,
+  Badge,
+  FloatButton,
+} from 'antd';
+import { useNavigate, useParams, useRequest } from '@umijs/max';
 import { getContent } from '@/services/blog/article';
 import { useState } from 'react';
 import { CodeBlock } from './components';
@@ -14,7 +24,7 @@ import dayjs from 'dayjs';
 import 'markdown-navbar/dist/navbar.css';
 import 'katex/dist/katex.min.css';
 import './index.less';
-import { UserOutlined } from '@ant-design/icons';
+import { BackwardOutlined, UserOutlined } from '@ant-design/icons';
 
 const Detail = () => {
   const [data, setData] = useState<{
@@ -25,6 +35,8 @@ const Detail = () => {
   }>({});
 
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const { loading } = useRequest(() => getContent({ id }), {
     manual: !id,
@@ -61,8 +73,8 @@ const Detail = () => {
                       )}
                     />
                     <Badge
-                      text={item.status === 0 ? '已发布' : '草稿'}
-                      status={item.status === 1 ? 'warning' : 'success'}
+                      text={item.status === 1 ? '已发布' : '草稿'}
+                      status={item.status === 0 ? 'warning' : 'success'}
                     />
                   </List.Item>
                 )}
@@ -91,6 +103,12 @@ const Detail = () => {
           </Col>
         </Row>
       </Skeleton>
+      <FloatButton
+        tooltip="返回"
+        onClick={() => navigate(-1)}
+        type="primary"
+        icon={<BackwardOutlined />}
+      />
     </PageContainer>
   );
 };
