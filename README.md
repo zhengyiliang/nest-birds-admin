@@ -2,15 +2,21 @@
 
 - react + ts/node + express + mysql
 
-  - 技术栈: react + ts(本项目)
+  - [门户项目](https://github.com/zhengyiliang/nest-birds)
 
-  - 服务端: [node + express + mysql + sequelize](https://github.com/zhengyiliang/nest-birds-server)
+  - 后台管理: react + ts(本项目)
+
+  - [服务端项目](https://github.com/zhengyiliang/nest-birds-server)
 
 - vue/node+express+mongodb
 
-  - [后台管理](https://gitee.com/zheng_yiliang/my_blog/tree/master/blog_admin)
+  - [门户项目](https://gitee.com/zheng_yiliang/my_blog/tree/master/blog_web)
 
-  - [服务端](https://gitee.com/zheng_yiliang/my_blog/tree/master/blog_server)
+  - [门户演示地址](https://zhengyiliang.cn)
+
+  - [后台管理项目](https://gitee.com/zheng_yiliang/my_blog/tree/master/blog_admin)
+
+  - [服务端项目](https://gitee.com/zheng_yiliang/my_blog/tree/master/blog_server)
 
   - [演示地址](https://zhengyiliang.cn/admin)
 
