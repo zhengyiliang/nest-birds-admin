@@ -1,8 +1,18 @@
 # 博客后台管理系统
 
-技术栈: react + ts
+- react + ts/node + express + mysql
 
-vue 版本: [后台管理系统](https://gitee.com/zheng_yiliang/my_blog/tree/master/blog_admin)
+  - 技术栈: react + ts(本项目)
+
+  - 服务端: [node + express + mysql + sequelize](https://github.com/zhengyiliang/nest-birds-server)
+
+- vue/node+express+mongodb
+
+  - [后台管理](https://gitee.com/zheng_yiliang/my_blog/tree/master/blog_admin)
+
+  - [服务端](https://gitee.com/zheng_yiliang/my_blog/tree/master/blog_server)
+
+  - [演示地址](https://zhengyiliang.cn/admin)
 
 `@umijs/max` 模板项目，更多功能参考 [Umi Max 简介](https://next.umijs.org/zh-CN/docs/max/introduce)
 
