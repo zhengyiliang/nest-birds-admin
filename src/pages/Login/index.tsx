@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import jwt from 'jsonwebtoken';
 import { useRequest, useModel, useNavigate } from '@umijs/max';
 import { LoginFormPage, ProFormText } from '@ant-design/pro-components';
+import logo from '@/favicon.ico';
 
 import './index.less';
 
@@ -16,7 +17,7 @@ const Login = () => {
     onSuccess({ data, code }) {
       if (code !== 200) return;
       const { accessToken, refreshToken } = data;
-      const user = jwt.decode(accessToken);
+      const user: any = jwt.decode(accessToken);
       localStorage.setItem('access_token', accessToken);
       localStorage.setItem('refresh_token', refreshToken);
       setInitialState({ user });
@@ -39,9 +40,9 @@ const Login = () => {
     >
       <LoginFormPage
         backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
-        logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-        title="Github"
-        subTitle="全球最大的代码托管平台"
+        logo={logo}
+        title="正好有时间"
+        subTitle="博客后台管理系统"
         onFinish={async (values: API.User) => {
           // 表单项校验成功后执行
           run(values);
@@ -58,7 +59,7 @@ const Login = () => {
             size: 'large',
             prefix: <UserOutlined className={'prefixIcon'} />,
           }}
-          placeholder={'用户名: admin or user'}
+          placeholder={'请输入用户名'}
           rules={[
             {
               required: true,
@@ -72,7 +73,7 @@ const Login = () => {
             size: 'large',
             prefix: <LockOutlined className={'prefixIcon'} />,
           }}
-          placeholder={'密码: ant.design'}
+          placeholder={'请输入密码'}
           rules={[
             {
               required: true,
